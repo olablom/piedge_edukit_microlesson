@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiEdge EduKit - Quick Start</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007acc;
+            background: #f9f9f9;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>PiEdge EduKit — 30-Minute Micro-Lesson</h1>
+        <p><strong>Goal:</strong> Train a tiny model, export to ONNX, benchmark FP32 vs INT8, and auto-verify.</p>
+        <ol>
+            <li>Prereqs: Python 3.12, <code>uv</code> (or pip), Jupyter Notebook, GPU optional.</li>
+            <li>Create venv: <code>python -m venv .venv</code> → activate → <code>pip install -r requirements.txt</code>
+            </li>
+            <li>Run: <code>bash ./run_lesson.sh</code> (writes <code>progress/receipt.json</code>)</li>
+            <li>Interactive path: open <code>notebooks/00_run_everything.ipynb</code> and follow the “Fast Track (~30
+                min)”.</li>
+            <li><strong>PASS criteria:</strong> INT8 speedup ≥ 5% (vs FP32) and model present. Accuracy/F1 checked when
+                images are provided.</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>⏱️ Micro‑lesson (≈30 min) – Start here</h2>
+        <p>This is the self-contained lesson path. Choose one of the two entry points below.</p>
+        <ol>
+            <li><strong>Script (non-interactive, fastest)</strong>
+                <div class="code">
+                    bash scripts/setup_venv.sh<br>
+                    # activate<br>
+                    # - Linux/macOS: source .venv/bin/activate<br>
+                    # - Windows (Git Bash/PowerShell): .venv\Scripts\activate<br>
+                    bash run_lesson.sh
+                </div>
+                <em>Outcome:</em> generates reports under <code>reports/</code> and a receipt at
+                <code>progress/receipt.json</code> (PASS expected).
+            </li>
+            <li style="margin-top:12px;"><strong>Notebook (interactive)</strong>
+                <div class="code">
+                    # after activating the .venv<br>
+                    jupyter notebook notebooks/00_run_everything.ipynb
+                </div>
+                <em>Outcome:</em> same artifacts as the script, with explanations and small interactions.
+            </li>
+        </ol>
+        <p><strong>Note:</strong> Python 3.12 inside <code>.venv</code> is required. Do not install into system Python.
+        </p>
+    </div>
+
+    <div class="step">
+        <h2>📋 Prerequisites</h2>
+        <ul>
+            <li>Python 3.12 (required)</li>
+            <li>OS: Windows 11 (latest), macOS (latest), Ubuntu 22.04</li>
+            <li>Optional GPU: NVIDIA (CUDA 11.x or 12.x) ≤ 16 GB VRAM, or Apple Silicon. CPU fallback is supported.</li>
+            <li>Jupyter Notebook (or VS Code Notebook, or Google Colab). No Jupyter Lab–specific extensions required.
+            </li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>🖥️ Windows (PowerShell or Git Bash)</h2>
+        <div class="code">
+            git clone https://github.com/olablom/PiEdge_EduKit.git<br>
+            cd PiEdge_EduKit<br>
+            python main.py
+        </div>
+        <p><strong>Alternative:</strong> Run <code>scripts\demo_pretty.bat</code> for a quick demo</p>
+    </div>
+
+    <div class="step">
+        <h2>🍎 macOS / 🐧 Linux (Terminal)</h2>
+        <div class="code">
+            git clone https://github.com/olablom/PiEdge_EduKit.git<br>
+            cd PiEdge_EduKit<br>
+            python3 main.py
+        </div>
+        <p><strong>Alternative:</strong> Run <code>bash scripts/demo_pretty.sh</code> for a quick demo</p>
+    </div>
+
+    <div class="step">
+        <h2>✅ Setup & Verification</h2>
+        <div class="code">
+            bash scripts/setup_venv.sh
+            # activate
+            # - Linux/macOS: source .venv/bin/activate
+            # - Windows: .venv\Scripts\activate
+            python verify.py
+        </div>
+        <p>No API keys are required (<code>.env.example</code> is provided for extensions). This will create a virtual
+            environment and verify components. A JSON receipt is written to <code>progress/receipt.json</code> even on
+            failure.</p>
+    </div>
+
+    <div class="step">
+        <h2>📚 Notebooks</h2>
+        <p>Start with these notebooks in order (Jupyter Lab will open automatically):</p>
+        <ol>
+            <li><strong>00_run_everything.ipynb</strong> - Complete workflow</li>
+            <li><strong>01_training_and_export.ipynb</strong> - Model training</li>
+            <li><strong>02_latency_benchmark.ipynb</strong> - Performance testing</li>
+            <li><strong>03_quantization.ipynb</strong> - Model optimization</li>
+            <li><strong>04_evaluate_and_verify.ipynb</strong> - Final evaluation</li>
+        </ol>
+    </div>
+
+    <div class="warning">
+        <h3>⚠️ Troubleshooting</h3>
+        <ul>
+            <li>If <code>python main.py</code> fails, try <code>python3 main.py</code></li>
+            <li>On Windows, you might need to run PowerShell as Administrator</li>
+            <li>If Jupyter doesn't open, check that port 8888 is available</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>⚙️ Execution Providers</h2>
+        <p>The lesson runs on CPU by default using ONNX Runtime. If CUDA 11.x/12.x is available, you can enable
+            <code>CUDAExecutionProvider</code> in CLI tools; otherwise it falls back to
+            <code>CPUExecutionProvider</code>.
+        </p>
+    </div>
+
+    <div class="step">
+        <h2>💡 Hints & Pitfalls</h2>
+        <ul>
+            <li>Always run inside <code>.venv</code>.</li>
+            <li>If verification fails, open <code>progress/receipt.json</code> to see failing checks.</li>
+            <li>Latency metrics are read from <code>reports/latency_results.json</code> (expects <code>p50_ms</code> and
+                <code>p95_ms</code> or nested statistics).
+            </li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>📦 Submission & Policy</h2>
+        <ul>
+            <li>Solo work only.</li>
+            <li>ZIP name: <code>VG_&lt;Firstname&gt;_&lt;Lastname&gt;_&lt;YYYYMMDD&gt;.zip</code></li>
+            <li>ZIP limits: ≤ 0.5 GB with downloads or ≤ 1 GB self-contained; total external downloads ≤ 50 GB.</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>🎯 What You'll Learn</h2>
+        <ul>
+            <li>PyTorch model training and export</li>
+            <li>ONNX model conversion and optimization</li>
+            <li>Model quantization for edge deployment</li>
+            <li>Performance benchmarking and analysis</li>
+            <li>Edge AI best practices</li>
+        </ul>
+    </div>
+
+    <footer style="margin-top: 40px; text-align: center; color: #666;">
+        <p>PiEdge EduKit - Making Edge AI Accessible</p>
+    </footer>
+</body>
+
+</html>

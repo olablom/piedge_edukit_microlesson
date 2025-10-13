@@ -1,0 +1,21 @@
+# filename: requirements.txt
+# PiEdge EduKit - Pinned requirements for Python 3.12
+numpy==1.26.4
+Pillow==10.3.0
+matplotlib==3.8.4
+onnx==1.16.1
+# ORT: choose silicon vs non-silicon
+onnxruntime==1.18.0; platform_system != "Darwin" or platform_machine != "arm64"
+onnxruntime-silicon==1.18.0; platform_system == "Darwin" and platform_machine == "arm64"
+torch==2.3.1
+torchvision==0.18.1
+pandas==2.2.2
+jupyter==1.0.0
+ipykernel==6.29.4
+tqdm==4.66.4
+psutil==5.9.8
+# Lesson dependencies (for micro-lesson)
+scikit-learn==1.4.2
+skl2onnx==1.16.0
+onnxruntime-tools==1.7.0
+click==8.1.7
