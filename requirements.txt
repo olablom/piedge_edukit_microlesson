@@ -1,23 +1,27 @@
-# filename: requirements.txt
-# PiEdge EduKit - Pinned requirements for Python 3.12
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Core ML stack (CPU)
+torch==2.3.1+cpu
+torchvision==0.18.1+cpu
 numpy==1.26.4
-Pillow==10.3.0
-matplotlib==3.8.4
-onnx==1.16.1
-# ORT: choose silicon vs non-silicon
-onnxruntime==1.18.0; platform_system != "Darwin" or platform_machine != "arm64"
-onnxruntime-silicon==1.18.0; platform_system == "Darwin" and platform_machine == "arm64"
-torch==2.3.1
-torchvision==0.18.1
 pandas==2.2.2
-jupyter==1.0.0
-ipykernel==6.29.4
+scipy==1.11.4
+scikit-learn==1.5.2
+pillow==10.3.0
 tqdm==4.66.4
-psutil==5.9.8
-# Load .env if present
+
+# ONNX
+onnx==1.16.0
+onnxruntime==1.18.0
+
+# Plot/nb headless
+matplotlib==3.8.4
+nbformat==5.10.4
+nbclient==0.10.2
+jupyter-client==8.6.0
+jupyter-core==5.7.2
+ipykernel==6.29.5
+nbconvert==7.16.4
+
+# Övrigt
 python-dotenv==1.0.1
-# Lesson dependencies (for micro-lesson)
-scikit-learn==1.4.2
-skl2onnx==1.16.0
-onnxruntime-tools==1.7.0
-click==8.1.7
