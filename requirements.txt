@@ -21,7 +21,8 @@ nbclient==0.10.2
 jupyter-client==8.6.0
 jupyter-core==5.7.2
 ipykernel==6.29.5
-nbconvert==7.16.4
+nbconvert==7.15.0
+mistune==3.0.2
 
 # Övrigt
 python-dotenv==1.0.1
