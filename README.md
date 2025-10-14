@@ -8,7 +8,7 @@ Requirements: Python 3.12, a local `.venv`, pinned `requirements.txt`. GPU optio
 
 # PiEdge EduKit
 
-![CI](https://github.com/olablom/PiEdge_EduKit/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/olablom/piedge_edukit_microlesson/actions/workflows/ci.yml/badge.svg)
 
 **Start here → [`index.html`](index.html)** | Swedish: **[README.sv.md](README.sv.md)**
 
@@ -19,14 +19,45 @@ A **self-contained 30-minute micro-lesson** for edge ML: train a tiny image clas
 **Windows:** Double-click `run_lesson.bat` _or_ run `python main.py`  
 **macOS/Linux:** `bash run_lesson.sh` _or_ `python3 main.py`
 
+### Quickstart (Windows)
+
+```bash
+git clone https://github.com/olablom/piedge_edukit_microlesson.git
+cd piedge_edukit_microlesson
+python -m venv .venv
+
+# Activate venv (choose one):
+# - Git Bash:      source .venv/Scripts/activate
+# - PowerShell:    .\.venv\Scripts\Activate.ps1
+# - CMD:           .\.venv\Scripts\activate.bat
+
+pip install -r requirements.txt
+pip install -e .
+copy .env.example .env
+python main.py --open-report
+```
+
 This will:
 
 - Create `.venv` if it doesn't exist
-- Install all requirements
+- Install all requirements (including `ipywidgets==8.1.5` for notebook UI)
 - Register Jupyter kernel "piedge"
-- Launch Jupyter Lab and open it automatically in your browser
+- Attempts to open Jupyter Lab automatically (falls back to printing a URL if it can't)
 
 > **Note:** If `data/train` is missing, a small synthetic dataset is created automatically during execution.
+
+### Create submission ZIP (tracked files only)
+
+```bash
+# From repo root
+git pull --ff-only
+git archive --format=zip \
+  --output ../VG_<Firstname>_<Lastname>_<YYYYMMDD>.zip \
+  --prefix=piedge_edukit_microlesson/ \
+  main
+```
+
+> **Note:** Use `git archive` – the ZIP should normally be ≪ 50 MB.
 
 ## Build lesson + auto-checksum
 
@@ -125,7 +156,7 @@ source .venv/bin/activate      # Linux/macOS
 
 # Run the micro-lesson (self-contained, FakeData)
 bash run_lesson.sh              # Linux/macOS
-# or: run_labs.bat              # Windows
+# or: run_lesson.bat              # Windows
 
 # Auto-verify (JSON receipt)
 python verify.py
@@ -220,7 +251,7 @@ Notebooks are partially exempted from Ruff/Pyright linting to reduce noise. Focu
 
 ### Quantization Issues
 
-INT8 quantization may fail on some systems. FP32 fallback is acceptable and will be used automatically.
+On some Windows setups, static INT8 quantization currently fails. The lesson **accepts FP32 fallback** and verify still **PASS**. This is expected behavior.
 
 ### Common Issues
 
