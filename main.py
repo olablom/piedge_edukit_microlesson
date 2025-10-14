@@ -53,16 +53,16 @@ def ensure_venv() -> None:
         or "/.venv/Scripts/python" in sys.executable.replace("\\", "/")
     )
     if not venv_active:
-        echo("⚠️  VARNING: Det ser inte ut som att projektets .venv är aktiv.")
+        echo("WARNING: Det ser inte ut som att projektets .venv är aktiv.")
         echo(
             "    Aktivera först:  source .venv/Scripts/activate  (Git Bash på Windows)"
         )
     else:
-        echo(f"✅ Python: {sys.executable}")
+        echo(f"OK Python: {sys.executable}")
 
 
 def clean_outputs() -> None:
-    echo("🧹 Rensar: models/, reports/, progress/, artifacts/ ...")
+    echo("Rensar: models/, reports/, progress/, artifacts/ ...")
     for d in ("models", "reports", "progress", "artifacts"):
         p = REPO_ROOT / d
         if p.exists():
@@ -71,14 +71,14 @@ def clean_outputs() -> None:
 
 
 def editable_install() -> None:
-    echo("📦 Säkerställer editable install: pip install -e .")
+    echo("Säkerställer editable install: pip install -e .")
     res = subprocess.run([sys.executable, "-m", "pip", "install", "-e", str(REPO_ROOT)])
     if res.returncode != 0:
         raise SystemExit("pip install -e . misslyckades")
 
 
 def execute_notebook() -> None:
-    echo(f"🚀 Kör notebook headless: {NB_PATH}")
+    echo(f"Kör notebook headless: {NB_PATH}")
     if not NB_PATH.exists():
         raise FileNotFoundError(f"Hittar inte notebook: {NB_PATH}")
 
@@ -95,13 +95,13 @@ def execute_notebook() -> None:
     with NB_PATH.open("w", encoding="utf-8") as f:
         nbformat.write(nb, f)
 
-    echo("✅ Notebook körd klart")
+    echo("Notebook körd klart")
 
 
 def print_receipt_summary() -> str:
     receipt_path = REPO_ROOT / "progress" / "receipt.json"
     if not receipt_path.exists():
-        echo("❌ Hittar inte progress/receipt.json")
+        echo("Hittar inte progress/receipt.json")
         return "UNKNOWN"
 
     r = json.loads(receipt_path.read_text(encoding="utf-8"))
@@ -110,8 +110,8 @@ def print_receipt_summary() -> str:
         status = "PASS" if r.get("pass") else "FAIL"
     status = str(status).upper()
 
-    echo("\n🧾 Receipt summary:")
-    echo("✅ VERIFY: PASS" if status == "PASS" else "❌ VERIFY: FAIL")
+    echo("\nReceipt summary:")
+    echo("VERIFY: PASS" if status == "PASS" else "VERIFY: FAIL")
 
     m = r.get("metrics", {}) or {}
     for k in ("fp32_mean_ms", "int8_mean_ms", "speedup_pct", "mae"):
@@ -122,7 +122,7 @@ def print_receipt_summary() -> str:
 
 
 def export_html_report() -> None:
-    echo(f"\n🖨️  Skapar HTML-rapport: {REPORT_HTML}")
+    echo(f"\nSkapar HTML-rapport: {REPORT_HTML}")
     with NB_PATH.open("r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
@@ -134,7 +134,7 @@ def export_html_report() -> None:
 
     REPORT_HTML.parent.mkdir(parents=True, exist_ok=True)
     REPORT_HTML.write_text(body, encoding="utf-8")
-    echo(f"📄 Rapport sparad: {REPORT_HTML}")
+    echo(f"Rapport sparad: {REPORT_HTML}")
 
 
 def _read_mean_ms(path: Path) -> float | None:
@@ -310,7 +310,7 @@ def run_verify() -> None:
         min_speedup = "-10.0"
 
     echo(
-        f"🔎 verify: fp32={fp32_path}, int8={int8_path}, min_speedup_pct={min_speedup}"
+        f"verify: fp32={fp32_path}, int8={int8_path}, min_speedup_pct={min_speedup}"
     )
     cmd = [
         sys.executable,
@@ -344,11 +344,11 @@ def open_file(path: Path) -> None:
         else:
             subprocess.run(["xdg-open", str(path)], check=False)
     except Exception as e:
-        echo(f"⚠️  Kunde inte öppna {path}: {e}")
+        echo(f"Kunde inte öppna {path}: {e}")
 
 
 def open_lab() -> None:
-    echo(f"🧪 Öppnar Jupyter Lab med {NB_PATH.name} …")
+    echo(f"Öppnar Jupyter Lab med {NB_PATH.name} …")
     try:
         subprocess.Popen(
             [sys.executable, "-m", "jupyter", "lab", str(NB_PATH)],
@@ -357,7 +357,7 @@ def open_lab() -> None:
             stderr=subprocess.DEVNULL,
         )
     except Exception as e:
-        echo(f"⚠️  Kunde inte starta Jupyter Lab: {e}")
+        echo(f"Kunde inte starta Jupyter Lab: {e}")
 
 
 def main() -> int:
@@ -402,7 +402,7 @@ def main() -> int:
         acc_dir.mkdir(parents=True, exist_ok=True)
         acc_for_verify = acc_dir / "accuracy_for_verify.json"
         if not acc_for_verify.exists():
-            echo("🧪 Skapar accuracy_for_verify.json …")
+            echo("Skapar accuracy_for_verify.json …")
             fp32_path = REPO_ROOT / "models" / "model.onnx"
             # Kandidater för INT8 (från quantization eller artifacts)
             int8_candidates = [
@@ -457,10 +457,10 @@ def main() -> int:
                 d = {"mae": 0.001, "threshold": 0.02, "pass": True}
             acc_for_verify.write_text(json.dumps(d, indent=2), encoding="utf-8")
         else:
-            echo("✅ reports/accuracy_for_verify.json finns redan")
+            echo("reports/accuracy_for_verify.json finns redan")
     except Exception as e:
         # Sista utväg: skriv en minimal stub som verifier uppfattar
-        echo(f"⚠️  Kunde inte generera accuracy_for_verify.json via evaluate: {e}")
+        echo(f"Kunde inte generera accuracy_for_verify.json via evaluate: {e}")
         fallback = {
             "mae": 0.001,
             "threshold": 0.02,
@@ -470,7 +470,7 @@ def main() -> int:
             json.dumps(fallback, indent=2),
             encoding="utf-8",
         )
-        echo("📝 Skrev fallback reports/accuracy_for_verify.json")
+        echo("Skrev fallback reports/accuracy_for_verify.json")
     # Kör verify robust även om notebookens verify skulle fallera
     acc_for_verify = REPO_ROOT / "reports" / "accuracy_for_verify.json"
     _ensure_acc_json_ok(acc_for_verify)
@@ -484,7 +484,7 @@ def main() -> int:
     export_html_report()
     if args.open_report:
         open_file(REPORT_HTML)
-    echo("\n🎉 Klart!")
+    echo("\nKlart!")
     return 0 if status == "PASS" else 1
 
 

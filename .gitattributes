@@ -1,2 +1,5 @@
-scripts/*.sh text eol=lf
+* text=auto
+*.sh eol=lf
+*.py eol=lf
+*.ipynb eol=lf
 
