@@ -1,3 +1,6 @@
+# reports generated from nbconvert
+notebooks/run_everything_REPORT*.html
+!.env.example
 .venv/
 __pycache__/
 artifacts/
@@ -5,3 +8,25 @@ reports/
 *.zip
 progress/receipt.json
 
+
+# venv & python build
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# runtime/artifacts
+models/
+reports/
+artifacts/
+notebooks/.ipynb_checkpoints/
+data/
+
+# progress: ignorera receipt, men behåll lesson_progress.json
+progress/receipt.json
+!progress/lesson_progress.json
+
+# env
+.env
+.env.local

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+from piedge_edukit.verify import main
+
+if __name__ == "__main__":
+    main()
+#!/usr/bin/env python3
 # filename: verify.py
 import json, sys, time
 from pathlib import Path

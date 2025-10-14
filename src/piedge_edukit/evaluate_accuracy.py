@@ -10,8 +10,9 @@ import sys
 import textwrap
 
 
-def run_onnx(model_path: str, x: np.ndarray, input_name: str = "input") -> np.ndarray:
+def run_onnx(model_path: str, x: np.ndarray) -> np.ndarray:
     session = ort.InferenceSession(model_path, providers=["CPUExecutionProvider"])
+    input_name = session.get_inputs()[0].name
     return session.run(None, {input_name: x})[0]
 
 
@@ -28,14 +29,13 @@ def main() -> None:
     ap.add_argument("--feat", type=int, default=32)
     args = ap.parse_args()
 
-    # Load inputs
+    # Load inputs (prefer NCHW dummy for image-like models)
     if os.path.exists(args.input_npz):
         data = np.load(args.input_npz)
         x = data[args.npz_key].astype(np.float32)
-        if x.ndim == 2 and x.shape[0] > args.batch:
-            x = x[: args.batch]
     else:
-        x = np.random.randn(args.batch, args.feat).astype(np.float32)
+        # Default to (N,3,64,64) image tensor as used in lessons
+        x = (np.random.rand(args.batch, 3, 64, 64).astype(np.float32) - 0.5) * 2.0
 
     y32 = run_onnx(args.fp32, x)
     y8 = run_onnx(args.int8, x)

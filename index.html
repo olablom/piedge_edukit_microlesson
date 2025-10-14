@@ -1,3 +1,110 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8" />
+<title>PiEdge EduKit — Micro-lesson (Start Here)</title>
+<style>
+    body {
+        font: 16px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 16px
+    }
+
+    pre,
+    code {
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace
+    }
+
+    .box {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 16px 0
+    }
+
+    a {
+        color: #0b61a4;
+        text-decoration: none
+    }
+
+    a:hover {
+        text-decoration: underline
+    }
+</style>
+<h1>PiEdge EduKit — Guided Demo (Micro-lesson)</h1>
+
+<p><strong>Goal:</strong> Run a 30-min self-contained Edge-ML pipeline, generate artifacts and a
+    <code>progress/receipt.json</code> proving completion.</p>
+
+<div class="box">
+    <h2>Prereqs</h2>
+    <ul>
+        <li>Python 3.12 installed</li>
+        <li>Jupyter Lab/Notebook (optional for interactive)</li>
+        <li>OS: Ubuntu 22.04 / macOS / Windows 11</li>
+    </ul>
+    <p>Environment template: <code>.env.example</code> (no vars needed; included for packaging spec)</p>
+</div>
+
+<div class="box">
+    <h2>Setup (.venv)</h2>
+    <p><b>Linux/mac</b>:</p>
+    <pre><code>bash setup_venv.sh
+source .venv/bin/activate</code></pre>
+    <p><b>Windows</b> (PowerShell/VS Code Terminal):</p>
+    <pre><code>py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt</code></pre>
+</div>
+
+<div class="box">
+    <h2>Run the lesson</h2>
+    <p><b>Linux/mac</b>:</p>
+    <pre><code>bash run_lesson.sh</code></pre>
+    <p><b>Windows</b>:</p>
+    <pre><code>run_lesson.bat</code></pre>
+    <p>This runs the full pipeline headless and opens the HTML report.</p>
+</div>
+
+<div class="box">
+    <h2>Interactive mode</h2>
+    <pre><code>source .venv/bin/activate   # or .\.venv\Scripts\activate
+python main.py --lab         # opens Jupyter Lab</code></pre>
+    <p>Open <code>notebooks/00_run_everything.ipynb</code> and run all cells.</p>
+</div>
+
+<div class="box">
+    <h2>What you’ll produce</h2>
+    <ul>
+        <li><code>models/model.onnx</code></li>
+        <li><code>reports/*.json/png</code></li>
+        <li><code>notebooks/run_everything_REPORT.html</code> (auto-opened)</li>
+        <li><code>progress/receipt.json</code> (PASS/FAIL + metrics)</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2>Verify & receipt</h2>
+    <p>Re-run verification at any time:</p>
+    <pre><code>python verify.py \
+  --lat-fp32 reports/latency_summary_fp32.json \
+  --lat-int8  reports/latency_summary_int8.json \
+  --acc-json  reports/accuracy_for_verify.json \
+  --receipt   progress/receipt.json \
+  --progress  progress/lesson_progress.json \
+  --min-speedup-pct -10.0
+</code></pre>
+</div>
+
+<div class="box">
+    <h2>Troubleshooting</h2>
+    <ul>
+        <li>If INT8 quantization fails, FP32 fallback is accepted (receipt still PASS).</li>
+        <li>If images don’t show in the HTML, ensure <code>notebooks/setup_diagram.png</code> exists.</li>
+    </ul>
+</div>
+
+</html>
 <!DOCTYPE html>
 <html lang="en">
 

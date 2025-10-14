@@ -14,6 +14,8 @@ jupyter==1.0.0
 ipykernel==6.29.4
 tqdm==4.66.4
 psutil==5.9.8
+# Load .env if present
+python-dotenv==1.0.1
 # Lesson dependencies (for micro-lesson)
 scikit-learn==1.4.2
 skl2onnx==1.16.0

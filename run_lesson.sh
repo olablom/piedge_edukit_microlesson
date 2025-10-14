@@ -1,6 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Gå till repo-rot
+cd "$(dirname "$0")"
+
+# Skapa .venv om saknas (Python 3.12 krävs)
+if [ ! -d ".venv" ]; then
+  echo ">> Creating .venv (Python 3.12 required)..."
+  python3.12 -m venv .venv
+fi
+
+# Aktivera venv
+if [ -f .venv/bin/activate ]; then
+  # shellcheck disable=SC1091
+  source .venv/bin/activate
+else
+  echo "Error: .venv not found or activate script missing" >&2
+  exit 1
+fi
+
+# Installera beroenden om requirements.txt finns
+if [ -f requirements.txt ]; then
+  python -m pip install --upgrade pip
+  pip install -r requirements.txt
+fi
+
+# Kör lektionen headless och öppna rapporten
+python main.py --open-report
+#!/usr/bin/env bash
+set -euo pipefail
+
 # 0) Miljö
 bash scripts/setup_venv.sh
 # shellcheck disable=SC1091
