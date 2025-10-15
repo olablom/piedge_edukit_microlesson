@@ -8,7 +8,7 @@ Requirements: Python 3.12, a local `.venv`, pinned `requirements.txt`. GPU optio
 
 # PiEdge EduKit
 
-![CI](https://github.com/olablom/piedge_edukit_microlesson/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/olablom/piedge_edukit_microlesson/actions/workflows/ci.yml/badge.svg?branch=main)
 
 **Start here → [`index.html`](index.html)** | Swedish: **[README.sv.md](README.sv.md)**
 
