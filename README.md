@@ -57,7 +57,8 @@ git archive --format=zip \
   main
 ```
 
-> **Note:** Use `git archive` – the ZIP should normally be ≪ 50 MB.
+> **Note:** Use `git archive` – the ZIP should normally be ≪ 50 MB.  
+> **Gmail warning:** Gmail may block ZIP files containing `.bat/.exe/.js` files. Consider using Google Drive link instead.
 
 ## Build lesson + auto-checksum
 
@@ -252,6 +253,8 @@ Notebooks are partially exempted from Ruff/Pyright linting to reduce noise. Focu
 ### Quantization Issues
 
 On some Windows setups, static INT8 quantization currently fails. The lesson **accepts FP32 fallback** and verify still **PASS**. This is expected behavior.
+
+**FP32-fallback:** Om INT8-quantization misslyckas markeras det som *FP32-fallback* och latensvärden skrivs med 3 decimaler.
 
 ### Common Issues
 

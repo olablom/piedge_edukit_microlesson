@@ -180,15 +180,22 @@ def main():
     write_receipt(args.receipt, status, metrics, details)
     # skriv även till --progress om det särskiljs
     if args.progress and args.progress != args.receipt:
-        write_receipt(args.progress, status, metrics, details)
+        progress_receipt = Path(args.progress) / "receipt.json"
+        write_receipt(str(progress_receipt), status, metrics, details)
 
     print(f"VERIFY RESULT: {status}")
-    print(f"  FP32 mean: {fp32_ms:.6f} ms")
-    print(f"  INT8 mean: {int8_ms:.6f} ms")
+    print(f"  FP32 mean: {fp32_ms:.3f} ms")
+    print(f"  INT8 mean: {int8_ms:.3f} ms")
     print(
         f"  Speedup:   {speedup_pct:.2f} %  (min required: {args.min_speedup_pct:.2f} %)"
     )
     print(f"  MAE:       {mae:.6f}  (threshold: {thresh})")
+
+    # Check for fallback (identical values)
+    if abs(fp32_ms - int8_ms) < 1e-6:
+        print("  Note: INT8 quantization failed; FP32-fallback used.")
+    print()
+
     exit(0 if ok else 1)
 
 

@@ -1,8 +1,8 @@
 {
   "status": "PASS",
   "metrics": {
-    "fp32_mean_ms": 0.5014333291910589,
-    "int8_mean_ms": 0.5014333291910589,
+    "fp32_mean_ms": 0.536,
+    "int8_mean_ms": 0.536,
     "speedup_pct": 0.0,
     "mae": 0.001,
     "max_mae_threshold": 0.02,
@@ -11,8 +11,8 @@
   },
   "details": {
     "latency_summaries": {
-      "fp32": "C:\\Users\\olabl\\Documents\\GitHub\\test_piedge_microlesson\\piedge_edukit_microlesson\\reports\\latency_summary_fp32.json",
-      "int8": "C:\\Users\\olabl\\Documents\\GitHub\\test_piedge_microlesson\\piedge_edukit_microlesson\\reports\\latency_summary_int8.json"
+      "fp32": "reports/latency_summary_fp32.json",
+      "int8": "reports/latency_summary_int8.json"
     },
     "accuracy_json": "reports/accuracy_for_verify.json",
     "raw_accuracy": {
